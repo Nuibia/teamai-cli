@@ -605,7 +605,7 @@ export const TOOLS = {
   },
   joycode: {
     home: { dir: '.joycode' },
-    skillLoad: 'unknown',
+    skillLoad: { calls: [] },
     skills: UNKNOWN_READS,
     rules: {
       user: { channel: 'inline', label: 'JoyCode rules.txt' },
@@ -618,17 +618,18 @@ export const TOOLS = {
     // JoyCode loads an agent only through its `.joycode/agent.json` index, which teamai does not write.
     agents: { user: { reads: 'unknown' }, project: { reads: 'unknown' } },
     mcp: NONE,
-    hooks: { user: 'none', self: 'none' },
-    sessions: 'unknown',
+    // ~/.joycode/hooks.json and <project>/.joycode/hooks.json take Claude-shaped hooks (command type, timeout in seconds).
+    hooks: { user: { channel: 'settings', format: 'claude', reads: [{ base: 'home', path: '.joycode/hooks.json', evidence: 'source' }] }, self: { channel: 'settings', format: 'claude', reads: [{ base: 'project', path: '.joycode/hooks.json', when: 'workspaceUnder', evidence: 'source' }] } },
+    sessions: ['joycode'],
     launch: 'none',
     features: {
       env: '?',
       workflows: '?',
       recall: '◐s',
-      stats: '?',
+      stats: { cell: '✓t', note: 'A1 (#1245) records its skill loads; not rerun' },
       aiBackend: '?',
       votesJudge: '?',
-      sessionJudge: '?',
+      sessionJudge: { cell: '✓t', note: '#1386 the session judges its skill-driven run; not rerun' },
       agentHooks: '?',
     },
   },
